@@ -36,8 +36,10 @@ const Container = styled.div`
       height: 46px;
 
       margin-bottom: 36px;
-      border-radius: 5px;
       padding-left: 15px;
+
+      border: none;
+      border-radius: 5px;
 
       font-size: 20px;
       font-weight: bold;
