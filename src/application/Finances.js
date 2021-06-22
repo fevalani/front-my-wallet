@@ -1,33 +1,52 @@
 import styled from "styled-components";
-import { ExitOutline, AddCircleOutline } from "react-ionicons";
+import {
+  ExitOutline,
+  AddCircleOutline,
+  RemoveCircleOutline,
+} from "react-ionicons";
 import { useHistory } from "react-router-dom";
 
+import FinancesBox from "./FinancesBox";
+import { useContext } from "react";
+import UserContext from "../context/UserContext";
+
 export default function Finances() {
+  const { user, setUser } = useContext(UserContext);
+  const { token, name } = user;
+
   const history = useHistory();
+
   return (
     <Container>
       <div>
-        Olá, Fulano!
+        Olá, {name}!
         <ExitOutline
-          onClick={() => console.log("eu quero sair!")}
+          onClick={() => {
+            setUser(null);
+            //LIMPAR O LOCAL STORAGE
+            history.push("/");
+          }}
           color={"#ffffff"}
           height="30px"
           width="30px"
         />
       </div>
-      <Box></Box>
-      <AddButton onClick={() => history.push("/my-wallet/addexpense")}>
-        <AddCircleOutline
-          className
-          color={"#ffffff"}
-          height="50px"
-          width="50px"
-        />
-        Nova entrada
-      </AddButton>
-      <AddButton
-        onClick={() => history.push("/my-wallet/addrevenue")}
-      ></AddButton>
+      <FinancesBox />
+      <div>
+        <AddButton onClick={() => history.push("/my-wallet/addexpense")}>
+          <AddCircleOutline
+            className
+            color={"#ffffff"}
+            height="25px"
+            width="25px"
+          />
+          <p>Nova entrada</p>
+        </AddButton>
+        <AddButton onClick={() => history.push("/my-wallet/addrevenue")}>
+          <RemoveCircleOutline color={"#ffffff"} height="25px" width="25px" />
+          <p>Nova saída</p>
+        </AddButton>
+      </div>
     </Container>
   );
 }
@@ -61,14 +80,24 @@ const Container = styled.div`
   }
 `;
 
-const Box = styled.ul`
-  width: 326px;
-  height: 446px;
-
-  background-color: #fff;
-`;
-
 const AddButton = styled.button`
   width: 155px;
   height: 114px;
+  padding: 10px;
+
+  border-radius: 5px;
+  background-color: #a328d6;
+
+  font-size: 17px;
+  font-weight: bold;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  p {
+    width: 50px;
+    text-align: start;
+  }
 `;

@@ -1,16 +1,23 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useHistory } from "react-router";
+import UserContext from "../context/UserContext";
 import Container from "../styles/loginContainer";
 
 export default function Login() {
   const history = useHistory();
   const [body, setBody] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
+  const { user, setUser } = useContext(UserContext);
 
   function sendLogin(e) {
     e.preventDefault();
     setIsDisabled(true);
+    const config = {
+      header: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
     const promise = axios.post("http://localhost:4000/mywallet/", body);
     promise
       .then((response) => {
@@ -18,6 +25,7 @@ export default function Login() {
       })
       .catch((response) => {
         alert("Erro no login");
+        setIsDisabled(false);
       });
   }
 
