@@ -2,6 +2,7 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&family=Saira+Stencil+One&display=swap');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -56,4 +57,8 @@ strong{
 }
 *{
     box-sizing: border-box;
+}
+body{
+    background-color: #8C11Be;
+    font-family: 'Raleway', sans-serif;
 }
