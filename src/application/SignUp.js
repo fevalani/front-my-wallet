@@ -21,7 +21,7 @@ export default function SignUp() {
     const promise = axios.post("http://localhost:4000/mywallet/signup", body);
     promise
       .then((response) => {
-        history.push("/mywallet/");
+        history.push("/");
       })
       .catch((response) => {
         alert("Erro ao cadastrar");
@@ -66,7 +66,7 @@ export default function SignUp() {
           Cadastrar
         </button>
       </form>
-      <p onClick={() => history.push("/")}>Já tem uma conta? Entre agora!</p>
+      <a href="/">Já tem uma conta? Entre agora!</a>
     </Container>
   );
 }

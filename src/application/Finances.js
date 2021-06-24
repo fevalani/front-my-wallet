@@ -12,7 +12,7 @@ import UserContext from "../context/UserContext";
 
 export default function Finances() {
   const { user, setUser } = useContext(UserContext);
-  const { token, name } = user;
+  const { token, name, userId } = user;
 
   const history = useHistory();
 
@@ -55,8 +55,6 @@ const Container = styled.div`
   margin: 0 auto;
   width: 375px;
   height: 100vh;
-
-  background-color: #323232;
 
   display: flex;
   flex-direction: column;

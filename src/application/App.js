@@ -11,7 +11,7 @@ import { useState } from "react";
 import UserContext from "../context/UserContext";
 
 export default function App() {
-  const [user, setUser] = useState({ name: "Fernando", token: "#" });
+  const [user, setUser] = useState({ name: "", token: "", userId: "" });
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>

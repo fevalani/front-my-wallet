@@ -13,17 +13,18 @@ export default function Login() {
   function sendLogin(e) {
     e.preventDefault();
     setIsDisabled(true);
-    const config = {
-      header: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    };
-    const promise = axios.post("http://localhost:4000/mywallet/", body);
+    const promise = axios.post("http://localhost:4000/mywallet/login", body);
     promise
       .then((response) => {
+        setUser({
+          token: response.data.token,
+          name: response.data.name,
+          userId: response.data.userId,
+        });
         history.push("/my-wallet/finances");
       })
       .catch((response) => {
+        console.log(response);
         alert("Erro no login");
         setIsDisabled(false);
       });
@@ -53,7 +54,7 @@ export default function Login() {
           Entrar
         </button>
       </form>
-      <p onClick={() => history.push("/signup")}>Primeira vez? Cadastre-se!</p>
+      <a href="/signup">Primeira vez? Cadastre-se!</a>
     </Container>
   );
 }

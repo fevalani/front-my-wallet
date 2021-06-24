@@ -60,7 +60,7 @@ const Container = styled.div`
       margin-bottom: 30px;
     }
   }
-  p {
+  a {
     font-weight: bold;
     color: #fff;
     cursor: pointer;
