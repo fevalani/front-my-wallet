@@ -1,9 +1,10 @@
 import Container from "../styles/loginContainer";
 import { useHistory } from "react-router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import Loader from "react-loader-spinner";
+import UserContext from "../context/UserContext";
 
 export default function SignUp() {
   const history = useHistory();
@@ -11,6 +12,15 @@ export default function SignUp() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (localStorage.user) {
+      const userStorage = JSON.parse(localStorage.user);
+      setUser(userStorage);
+      history.push("/my-wallet/finances");
+    }
+  }, []);
 
   function signUpData(e) {
     e.preventDefault();

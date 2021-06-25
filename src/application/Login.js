@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import UserContext from "../context/UserContext";
 import Container from "../styles/loginContainer";
@@ -10,8 +10,16 @@ export default function Login() {
   const history = useHistory();
   const [body, setBody] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
-  const { user, setUser } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (localStorage.user) {
+      const userStorage = JSON.parse(localStorage.user);
+      setUser(userStorage);
+      history.push("/my-wallet/finances");
+    }
+  }, []);
 
   function sendLogin(e) {
     e.preventDefault();
@@ -20,6 +28,14 @@ export default function Login() {
     const promise = axios.post("http://localhost:4000/mywallet/login", body);
     promise
       .then((response) => {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            token: response.data.token,
+            name: response.data.name,
+            userId: response.data.userId,
+          })
+        );
         setUser({
           token: response.data.token,
           name: response.data.name,

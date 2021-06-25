@@ -1,35 +1,77 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Loader from "react-loader-spinner";
+import UserContext from "../context/UserContext";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function AddFinances({ type }) {
-  const [body, setBody] = useState({ value: "", description: "" });
+  const { user } = useContext(UserContext);
+  const [body, setBody] = useState({ value: "", description: "", type });
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
-  console.log(body);
+  useEffect(() => {
+    if (!localStorage.user) {
+      history.push("/");
+    }
+  }, []);
+
+  function addFinance(e) {
+    e.PreventeDefault();
+    const config = { header: { Authorization: `Bearer ${user.token}` } };
+    setLoading(true);
+    body.value.replace(",", "");
+    axios
+      .post(
+        "http://localhost:4000/mywallets/finances/add/finance",
+        body,
+        config
+      )
+      .then(() => {
+        setLoading(false);
+        history.push("/my-wallet/finances");
+      })
+      .catch(() => {
+        alert("Erro");
+        setLoading(false);
+      });
+  }
 
   return (
     <Container>
       <div>Nova {type === "expense" ? "saída" : "entrada"}</div>
-      <forms>
+      <form onSubmit={addFinance}>
         <input
-          type="text"
+          type="number"
           placeholder="Valor"
           onChange={(e) => setBody({ ...body, value: e.target.value })}
+          value={body.value}
+          disabled={loading}
+          required
         ></input>
         <input
           type="text"
           placeholder="Descrição"
           onChange={(e) => setBody({ ...body, description: e.target.value })}
+          value={body.description}
+          disabled={loading}
+          required
         ></input>
-        <button disabled={loading}>
+        <button type="submit" disabled={loading}>
           {loading ? (
             <Loader type="ThreeDots" color="#FFF" height={40} width={60} />
           ) : (
             <>Salvar {type === "expense" ? "saída" : "entrada"}</>
           )}
         </button>
-      </forms>
+        <button
+          onClick={() => history.push("/my-wallet/finances")}
+          disabled={loading}
+        >
+          Cancelar
+        </button>
+      </form>
     </Container>
   );
 }
@@ -53,7 +95,7 @@ const Container = styled.div`
 
     margin-bottom: 40px;
   }
-  forms {
+  form {
     display: flex;
     flex-direction: column;
 
@@ -82,6 +124,8 @@ const Container = styled.div`
     button {
       width: 100%;
       height: 46px;
+
+      margin-bottom: 10px;
 
       background-color: #a328d6;
 

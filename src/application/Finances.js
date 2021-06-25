@@ -7,14 +7,32 @@ import {
 import { useHistory } from "react-router-dom";
 
 import FinancesBox from "./FinancesBox";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../context/UserContext";
+import axios from "axios";
 
 export default function Finances() {
+  const history = useHistory();
   const { user, setUser } = useContext(UserContext);
   const { token, name, userId } = user;
 
-  const history = useHistory();
+  useEffect(() => {
+    if (localStorage.user) {
+      const userStorage = JSON.parse(localStorage.user);
+      setUser(userStorage);
+      history.push("/my-wallet/finances");
+    } else {
+      history.push("/");
+    }
+  }, []);
+
+  function deleteSession() {
+    const config = { header: { Authorization: `Bearer ${user.token}` } };
+    axios
+      .delete("", config)
+      .then()
+      .catch(() => alert("error"));
+  }
 
   return (
     <Container>
@@ -22,9 +40,10 @@ export default function Finances() {
         Olá, {name}!
         <ExitOutline
           onClick={() => {
-            setUser(null);
-            //LIMPAR O LOCAL STORAGE
+            localStorage.clear();
             history.push("/");
+            setUser(null);
+            deleteSession();
           }}
           color={"#ffffff"}
           height="30px"
