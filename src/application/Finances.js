@@ -67,6 +67,7 @@ const Container = styled.div`
     padding-left: 24px;
     padding-right: 24px;
     margin-bottom: 22px;
+    margin-top: 22px;
 
     color: #fff;
     font-weight: bold;
@@ -76,6 +77,9 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+  div:nth-child(3) {
+    margin: 0;
+  }
 `;
 
 const AddButton = styled.button`
@@ -83,6 +87,7 @@ const AddButton = styled.button`
   height: 114px;
   padding: 10px;
 
+  border: none;
   border-radius: 5px;
   background-color: #a328d6;
 
