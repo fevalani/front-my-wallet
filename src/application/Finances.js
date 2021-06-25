@@ -33,7 +33,7 @@ export default function Finances() {
       </div>
       <FinancesBox />
       <div>
-        <AddButton onClick={() => history.push("/my-wallet/addexpense")}>
+        <AddButton onClick={() => history.push("/my-wallet/addrevenue")}>
           <AddCircleOutline
             className
             color={"#ffffff"}
@@ -42,7 +42,7 @@ export default function Finances() {
           />
           <p>Nova entrada</p>
         </AddButton>
-        <AddButton onClick={() => history.push("/my-wallet/addrevenue")}>
+        <AddButton onClick={() => history.push("/my-wallet/addexpense")}>
           <RemoveCircleOutline color={"#ffffff"} height="25px" width="25px" />
           <p>Nova saída</p>
         </AddButton>

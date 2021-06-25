@@ -38,7 +38,7 @@ const Container = styled.div`
       margin-bottom: 36px;
       padding-left: 15px;
 
-      border: none;
+      border-color: #a328d6;
       border-radius: 5px;
 
       font-size: 20px;

@@ -4,15 +4,19 @@ import { useHistory } from "react-router";
 import UserContext from "../context/UserContext";
 import Container from "../styles/loginContainer";
 
+import Loader from "react-loader-spinner";
+
 export default function Login() {
   const history = useHistory();
   const [body, setBody] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
   function sendLogin(e) {
     e.preventDefault();
     setIsDisabled(true);
+    setLoading(true);
     const promise = axios.post("http://localhost:4000/mywallet/login", body);
     promise
       .then((response) => {
@@ -24,8 +28,8 @@ export default function Login() {
         history.push("/my-wallet/finances");
       })
       .catch((response) => {
-        console.log(response);
         alert("Erro no login");
+        setLoading(false);
         setIsDisabled(false);
       });
   }
@@ -41,6 +45,7 @@ export default function Login() {
           placeholder="E-mail"
           onChange={(e) => setBody({ ...body, email: e.target.value })}
           value={body.email}
+          disabled={isDisabled}
           required
         ></input>
         <input
@@ -48,10 +53,15 @@ export default function Login() {
           placeholder="Senha"
           onChange={(e) => setBody({ ...body, password: e.target.value })}
           value={body.password}
+          disabled={isDisabled}
           required
         ></input>
         <button type="submit" disabled={isDisabled}>
-          Entrar
+          {loading ? (
+            <Loader type="ThreeDots" color="#FFF" height={40} width={60} />
+          ) : (
+            <>Entrar</>
+          )}
         </button>
       </form>
       <a href="/signup">Primeira vez? Cadastre-se!</a>

@@ -3,8 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Finances from "./Finances";
-import Expense from "./Expense";
-import Revenue from "./Revenue";
+import AddFinances from "./AddFinances";
 
 import "../styles/reset.css";
 import { useState } from "react";
@@ -26,10 +25,10 @@ export default function App() {
             <Finances />
           </Route>
           <Route path="/my-wallet/addexpense" exact>
-            <Expense />
+            <AddFinances type="expense" />
           </Route>
           <Route path="/my-wallet/addrevenue" exact>
-            <Revenue />
+            <AddFinances type="revenue" />
           </Route>
         </Switch>
       </BrowserRouter>
