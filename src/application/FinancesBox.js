@@ -14,7 +14,7 @@ export default function FinancesBox() {
 
   useEffect(() => {
     setLoading(true);
-    const config = { header: { Authorization: `Bearer ${user.token}` } };
+    const config = { headers: { Authorization: `Bearer ${user.token}` } };
     axios
       .get("http://localhost:4000/mywallets/finances", config)
       .then((response) => {

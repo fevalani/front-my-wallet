@@ -18,19 +18,17 @@ export default function AddFinances({ type }) {
   }, []);
 
   function addFinance(e) {
-    e.PreventeDefault();
-    const config = { header: { Authorization: `Bearer ${user.token}` } };
+    e.preventDefault();
+
+    const config = { headers: { Authorization: `Bearer ${user.token}` } };
+
     setLoading(true);
     body.value.replace(",", "");
     axios
-      .post(
-        "http://localhost:4000/mywallets/finances/add/finance",
-        body,
-        config
-      )
+      .post("http://localhost:4000/mywallet/finances/add/finance", body, config)
       .then(() => {
         setLoading(false);
-        history.push("/my-wallet/finances");
+        history.push("/");
       })
       .catch(() => {
         alert("Erro");
