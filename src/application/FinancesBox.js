@@ -1,37 +1,39 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
+import axios from "axios";
+import Loader from "react-loader-spinner";
 
-const bbb = [
-  {
-    date: "20/10",
-    description: "Pão francês",
-    value: "10,00",
-    type: "out",
-  },
-  {
-    date: "20/10",
-    description: "Divida do pedrinho",
-    value: "15,00",
-    type: "in",
-  },
-  { date: "20/10", description: "Jogo do joão", value: "7000,00", type: "in" },
-];
+import FinanceLine from "./FinanceLine";
+import UserContext from "../context/UserContext";
 
 export default function FinancesBox() {
-  const [posts, setPosts] = useState(bbb);
-  console.log(bbb.map((item) => item.description));
+  const { token } = useContext(UserContext);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    const config = { header: { Authorization: `Bearer ${token}` } };
+    axios
+      .get()
+      .then((response) => {
+        setLoading(false);
+      })
+      .catch((response) => {
+        setLoading(false);
+      });
+  }, []);
+
   return (
-    <Box posts={posts}>
-      {posts.length === 0 ? (
+    <Box posts={posts} loading={loading}>
+      {loading ? (
+        <PositionLoader>
+          <Loader type="TailSpin" color="#c6c6c6" height={80} width={80} />
+        </PositionLoader>
+      ) : posts.length === 0 ? (
         <p>Não há registros de entrada ou saída</p>
       ) : (
-        bbb.map((item) => (
-          <li>
-            <div>{item.date}</div>
-            <span>{item.description}</span>
-            <p type={item.type}>{item.value}</p>
-          </li>
-        ))
+        posts.map((item) => <FinanceLine item={item} />)
       )}
     </Box>
   );
@@ -50,7 +52,7 @@ const Box = styled.ul`
   overflow: hidden;
 
   ${(props) =>
-    props.posts.length === 0
+    props.posts.length === 0 || props.loading
       ? css`
           display: flex;
           align-items: center;
@@ -66,28 +68,6 @@ const Box = styled.ul`
 
     flex-wrap: nowrap;
   }
-
-  li {
-    width: 100%;
-
-    display: flex;
-
-    margin-bottom: 20px;
-    font-size: 16px;
-
-    div {
-      width: 48px;
-      padding: 0;
-      margin: 0px 8px 0 0;
-      color: #c6c6c6;
-      font-size: 16px;
-    }
-    span {
-      width: 100%;
-    }
-    p {
-      color: ${(type) => console.log(type)};
-      font-size: 16px;
-    }
-  }
 `;
+
+const PositionLoader = styled.span``;

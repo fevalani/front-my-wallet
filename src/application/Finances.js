@@ -79,6 +79,7 @@ const Container = styled.div`
   }
   div:nth-child(3) {
     margin: 0;
+    margin-bottom: 22px;
   }
 `;
 
