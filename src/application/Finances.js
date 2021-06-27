@@ -28,10 +28,7 @@ export default function Finances() {
 
   function deleteSession() {
     const config = { header: { Authorization: `Bearer ${user.token}` } };
-    axios
-      .delete("", config)
-      .then()
-      .catch(() => alert("error"));
+    axios.delete("", config).then().catch();
   }
 
   return (

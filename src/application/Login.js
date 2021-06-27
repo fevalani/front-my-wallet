@@ -25,7 +25,10 @@ export default function Login() {
     e.preventDefault();
     setIsDisabled(true);
     setLoading(true);
-    const promise = axios.post("http://localhost:4000/mywallet/login", body);
+    const promise = axios.post(
+      "https://my-wallet-back-end.herokuapp.com/mywallet/login",
+      body
+    );
     promise
       .then((response) => {
         localStorage.setItem(

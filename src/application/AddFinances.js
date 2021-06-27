@@ -25,7 +25,11 @@ export default function AddFinances({ type }) {
     setLoading(true);
     body.value.replace(",", "");
     axios
-      .post("http://localhost:4000/mywallet/finances/add/finance", body, config)
+      .post(
+        "https://my-wallet-back-end.herokuapp.com/mywallet/finances/add/finance",
+        body,
+        config
+      )
       .then(() => {
         setLoading(false);
         history.push("/");

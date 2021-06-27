@@ -16,7 +16,10 @@ export default function FinancesBox() {
     setLoading(true);
     const config = { headers: { Authorization: `Bearer ${user.token}` } };
     axios
-      .get("http://localhost:4000/mywallets/finances", config)
+      .get(
+        "https://my-wallet-back-end.herokuapp.com/mywallets/finances",
+        config
+      )
       .then((response) => {
         setPosts(response.data);
         setLoading(false);

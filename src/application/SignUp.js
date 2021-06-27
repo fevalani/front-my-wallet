@@ -32,7 +32,10 @@ export default function SignUp() {
 
     setLoading(true);
     setIsDisabled(true);
-    const promise = axios.post("http://localhost:4000/mywallet/signup", body);
+    const promise = axios.post(
+      "https://my-wallet-back-end.herokuapp.com/mywallet/signup",
+      body
+    );
     promise
       .then((response) => {
         history.push("/");
