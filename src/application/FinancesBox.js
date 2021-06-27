@@ -44,7 +44,7 @@ export default function FinancesBox() {
         ) : posts.length === 0 ? (
           <p>Não há registros de entrada ou saída</p>
         ) : (
-          posts.map((item) => <FinanceLine item={item} />)
+          posts.map((item, i) => <FinanceLine key={i} item={item} />)
         )}
       </Box>
       <Balance value={balanceValue}>

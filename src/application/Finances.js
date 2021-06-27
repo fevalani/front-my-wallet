@@ -13,8 +13,6 @@ import axios from "axios";
 
 export default function Finances() {
   const history = useHistory();
-  const { user, setUser } = useContext(UserContext);
-  const { token, name, userId } = user;
 
   useEffect(() => {
     if (localStorage.user) {
@@ -25,6 +23,8 @@ export default function Finances() {
       history.push("/");
     }
   }, []);
+
+  const { user, setUser } = useContext(UserContext);
 
   function deleteSession() {
     const config = { header: { Authorization: `Bearer ${user.token}` } };
@@ -37,7 +37,7 @@ export default function Finances() {
   return (
     <Container>
       <div>
-        Olá, {name}!
+        Olá, {user.name}!
         <ExitOutline
           onClick={() => {
             localStorage.clear();

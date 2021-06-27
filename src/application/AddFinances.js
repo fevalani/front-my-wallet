@@ -15,7 +15,7 @@ export default function AddFinances({ type }) {
     if (!localStorage.user) {
       history.push("/");
     }
-  }, []);
+  }, [history]);
 
   function addFinance(e) {
     e.preventDefault();
