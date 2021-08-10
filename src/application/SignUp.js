@@ -33,7 +33,7 @@ export default function SignUp() {
     setLoading(true);
     setIsDisabled(true);
     const promise = axios.post(
-      "https://my-wallet-back-end.herokuapp.com/mywallet/signup",
+      `${process.env.REACT_APP_API_BASE_URL}/mywallet/signup`,
       body
     );
     promise

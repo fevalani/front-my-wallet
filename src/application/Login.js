@@ -26,7 +26,7 @@ export default function Login() {
     setIsDisabled(true);
     setLoading(true);
     const promise = axios.post(
-      "https://my-wallet-back-end.herokuapp.com/mywallet/login",
+      `${process.env.REACT_APP_API_BASE_URL}/mywallet/login`,
       body
     );
     promise
